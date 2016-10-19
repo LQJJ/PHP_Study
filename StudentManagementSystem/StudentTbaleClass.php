@@ -12,7 +12,20 @@ require_once 'StudentClass.php';
  */
 class StudentTbaleClass
 {
+    static public function addStudent($student){
+        $name = $student->getName();
+        $age = $student->getAge();
+        $php = $student->getPhp();
+        $gender = $student->getGender();
 
+        $sqlTool = new SQLToolClass();
+        $sql = "insert into
+                student( s_name ,s_age ,s_PHP ,s_gender)
+                VALUES('$name',$age,$php,'$gender');";
+        $res = $sqlTool ->SQL_DDL($sql);
+        $sqlTool ->connectClose();
+        return $res;
+    }
     static public function deleteStudentById($id){
         $sqlTool = new SQLToolClass();
         $sql = "delete from student where s_id = $id;";

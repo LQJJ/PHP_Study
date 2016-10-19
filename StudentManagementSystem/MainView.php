@@ -24,7 +24,7 @@ echo "<a href='LoginView.php'>注销登陆</a><hr/><br/>";
             <td><a href="StudentListView.php">管理用户</a></td>
         </tr>
     <tr>
-        <td><a href="#">添加用户</a></td>
+        <td><a href="AddStudentView.php">添加用户</a></td>
     </tr>    <tr>
         <td><a href="#">查询用户</a></td>
     </tr>    <tr>

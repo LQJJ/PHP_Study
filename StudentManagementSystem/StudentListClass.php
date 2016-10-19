@@ -23,7 +23,7 @@ require_once 'StudentTbaleClass.php';
  */
 class StudentListClass
 {
-    private $pageSize = 10;
+    private $pageSize = 8;
     public $pageNow = 1;
     private $pageCount;
 
@@ -44,7 +44,6 @@ class StudentListClass
         return $this->pageSize;
     }
     public  function navgationTitle(){
-        $studentTbale = new StudentTbaleClass();
         $navTilte = '';
         $pageNow = $this->pageNow;
 
@@ -53,16 +52,26 @@ class StudentListClass
             $navTilte .= "<br/><a href='StudentListView.php?pageNow=$lastPageNow'>上一页<a/>&nbsp";
         }
         $nextPageNow=$pageNow + 1;
-        $navTilte .= "<a href='StudentListView.php?pageNow=$nextPageNow'>下一页<a/>&nbsp";
+        if($nextPageNow <= $this->getPageCount())
+        {
+            $navTilte .= "<a href='StudentListView.php?pageNow=$nextPageNow'>下一页<a/>&nbsp";
+        }
         $lastPageIndex = (($this->pageNow -10 )>0) ? ($this->pageNow -10 ):1;
+
         $navTilte .= "<a href='StudentListView.php?pageNow=$lastPageIndex'><<&nbsp<a/>";
 
         $i = floor(($this->pageNow - 1) /10)*10+1;
         $maxI = ($i-1) + 10;
+        while($maxI > $this->pageCount){
+            $maxI--;
+        }
         for(;$i <= $maxI;$i ++){
             $navTilte .= "<a href='StudentListView.php?pageNow=$i'>$i&nbsp<a/>";
         }
-        $nextPageIndex = $this->pageNow+10;
+        $nextPageIndex = floor($this->pageNow/10)*10 +11;
+        if($nextPageIndex > $this->getPageCount()){
+            $nextPageIndex = 1;
+        }
         $navTilte .= "<a href='StudentListView.php?pageNow=$nextPageIndex'>>>&nbsp<a/>";
 
 
@@ -91,7 +100,7 @@ class StudentListClass
 
         $col = count($rows[0]);
 
-        for($i=0; $i < $this ->pageSize; $i++)
+        for($i=0; $i < count($rows); $i++)
         {
             $lists .= '<tr>';
 
